@@ -25,6 +25,7 @@ app.use(methodOverride("_method"));
 const routes = require("./routes");
 
 app.use("/", routes.system);
+app.use("/v1/users", routes.users);
 
 // const morgan = require('morgan');
 //
