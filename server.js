@@ -26,6 +26,7 @@ const routes = require("./routes");
 
 app.use("/", routes.system);
 app.use("/v1/users", routes.users);
+app.use("/v1/personals", routes.personals);
 
 // const morgan = require('morgan');
 //

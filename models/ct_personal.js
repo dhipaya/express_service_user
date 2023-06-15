@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     REFCOMMENT: DataTypes.STRING
   }, {
     sequelize,
+    schema: 'service_user',
     modelName: 'CT_Personal',
   });
   return CT_Personal;

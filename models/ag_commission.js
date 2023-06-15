@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class CT_User extends Model {
+  class AG_Commission extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,19 +13,21 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  CT_User.init({
-    USERID: DataTypes.INTEGER,
-    PERSONALID: DataTypes.INTEGER,
+  AG_Commission.init({
+    SUBCAMPAIGNID: DataTypes.INTEGER,
     BRANCHCODE: DataTypes.INTEGER,
-    TYPE: DataTypes.STRING,
-    FLAGDELETE: DataTypes.STRING,
-    TYPEUSER: DataTypes.STRING,
-    DEPARTMENTCODE: DataTypes.STRING,
-    KPIBRANCHID: DataTypes.INTEGER
+    COMMRATE: DataTypes.INTEGER,
+    OV: DataTypes.INTEGER,
+    OE: DataTypes.INTEGER,
+    OE2: DataTypes.INTEGER,
+    TEMPRATE: DataTypes.INTEGER,
+    RPTRATE: DataTypes.INTEGER,
+    AGTGCODE: DataTypes.INTEGER,
+    CUSTOMERGCODE: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'CT_User',
     schema: 'service_user',
+    modelName: 'AG_Commission',
   });
-  return CT_User;
+  return AG_Commission;
 };

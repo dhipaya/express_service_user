@@ -10,18 +10,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       PERSONALID: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       TITLEID: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       SPOUSEID: {
         type: Sequelize.INTEGER
       },
       NAME: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       SURNAME: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       GENDER: {
@@ -103,6 +107,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       FLAGDELETE: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       FLGUSE: {
@@ -124,16 +129,22 @@ module.exports = {
         type: Sequelize.STRING
       },
       createdAt: {
+        defaultValue: new Date(),
         allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
+        defaultValue: new Date(),
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    },{
+      schema: 'service_user',
+  });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('CT_Personals');
+    await queryInterface.dropTable('CT_Personals',{
+      schema: 'service_user',
+  });
   }
 };

@@ -1,10 +1,10 @@
-const User = require("../models").User; //imported fruits array
+const CT_User = require("../models").CT_User; 
+const Personal = require("../models").CT_Personal; 
 // const Package = require("../models").Package;
 // const User = require("../models").User;
 const { Op } = require("sequelize");
-const crypto = require('crypto'); 
-const secretKey = process.env.secretkey
-const jwt = require('jsonwebtoken');
+const jwt_decode = require("jwt-decode");
+
 //handle index request
 const showAll = (req,res) =>{
     User.findAll({
@@ -29,43 +29,41 @@ const showOne = (req, res) => {
   });
 };
 
-const signup = (req,res)=>{
-    User.findOne({
-        order: [
-            ['USERID', 'DESC'],
-        ]
-    }).then((item)=>{
-       req.body.USERID = item.USERID + 1
-       const password = req.body.PASSWORD
-    // hash password
-    const hash = crypto.pbkdf2Sync(password, secretKey,  
-        1000, 64, `sha512`).toString(`hex`); 
-        req.body.PASSWORD = hash
+const registerPersonal = (req,res)=>{
+    const token = req.headers['authorization'].split(" ")[1];
+    const userId = jwt_decode(token);
+    res.send({USERID : userId.USERID})
+    // CT_User.findOne({
+    //     order: [
+    //         ['PERSONALID', 'DESC'],
+    //     ]
+    // }).then((item)=>{
+    //     const PERSONALID = item.PERSONALID + 1
+    //    req.body.PERSONALID = PERSONALID
+    //    req.body.USERID = userId.USERID          
+    //    CT_User.create(req.body)
+    //         .then((newUser) => {
+    //           console.log(newUser);
+    //         })
+    //         .catch((err) => {
+    //           res.status(502).json({ errors: [{ msg: "CT_User db" }] })
+    //         });
+    //     Personal.create(req.body)
+    //     .then((newUser) => {
+    //         // sendmail w8 status for approve
+    //       console.log(newUser);
+    //     })
+    //     .catch((err) => {
+    //       res.status(502).json({ errors: [{ msg: "CT_Personal db" }] })
+    //     });
 
-        User.create(req.body)
-            .then((newUser) => {
-              const token = jwt.sign(
-                {
-                    USERID: newUser.USERID,
-                },
-                secretKey,
-                {
-                  expiresIn: "2 hours",
-                }
-              );
-              res.json({ jwt: token });
-            })
-            .catch((err) => {
-              res.sendStatus(401);
-            });
-
-    }).catch((err) => {
-        res.sendStatus(502);
-      });
+    // }).catch((err) => {
+    //     res.sendStatus(502);
+    //   });
     
     
 }
-const login = (req,res)=>{
+const approveAgent = (req,res)=>{
     User.findOne({
         where: {
             USERNAME: req.body.USERNAME
@@ -130,8 +128,8 @@ const unlockUser =(req,res) =>{
 module.exports = {
   showAll,
   showOne,
-  signup,
-  login,
+  registerPersonal,
+  approveAgent,
   unlockUser,
   // removeCar,
   // editCar,

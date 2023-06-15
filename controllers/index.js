@@ -1,6 +1,7 @@
 module.exports = {
     system: require("./system"),
-    users: require("./users")
+    users: require("./users"),
+    personals: require("./personals")
 
 
 };
